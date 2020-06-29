@@ -11,7 +11,8 @@ namespace PodcastsWebApi.Models
         public string Title { get; set; }
         public string Url { get; set; }
         public string Author { get; set; }
-        public int NumberOfItems { get; set; }
+        public int NumberOfEpisodes { get; set; }
         public string Picture { get; set; } 
+
     }
 }
