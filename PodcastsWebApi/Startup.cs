@@ -25,6 +25,14 @@ namespace PodcastsWebApi
             {
                 options.UseSqlServer(Configuration.GetConnectionString("UserConnectionString"));
             });
+            services.AddDbContext<PodcastContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("PodcastConnectionString"));
+            });
+            services.AddDbContext<EpisodesContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("EpisodesConnectionString"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
