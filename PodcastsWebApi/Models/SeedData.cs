@@ -10,37 +10,25 @@ namespace PodcastsWebApi.Models
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var usercontext = new UserContext(
+            using (var podcastsContext = new PodcastsContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<UserContext>>()))
+                    DbContextOptions<PodcastsContext>>()))
             {
-                SeedUsers(usercontext);
-            }
-
-            using (var podcastscontext = new PodcastContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<PodcastContext>>()))
-            {
-                SeedPodcasts(podcastscontext);
-            }
-
-            using (var episodescontext = new EpisodesContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<EpisodesContext>>()))
-            {
-                SeedEpisodes(episodescontext);
+                SeedUsers(podcastsContext);
+                SeedPodcasts(podcastsContext);
+                SeedEpisodes(podcastsContext);
             }
         }
 
-        private static void SeedUsers(UserContext usercontext)
+        private static void SeedUsers(PodcastsContext podcastsContext)
         {
             // Look for any users.
-            if (usercontext.Users.Any())
+            if (podcastsContext.Users.Any())
             {
                 return;   // DB table(Users) has been seeded
             }
 
-            usercontext.Users.AddRange(
+            podcastsContext.Users.AddRange(
                 new User
                 {
                     FirstName = "Oana",
@@ -59,21 +47,21 @@ namespace PodcastsWebApi.Models
                     Password = "Qwerty2021",
                 }
             );
-            usercontext.SaveChanges();
+            podcastsContext.SaveChanges();
         }
 
-        private static void SeedPodcasts(PodcastContext podcastscontext)
+        private static void SeedPodcasts(PodcastsContext podcastsContext)
         {
-            // Look for any users.
-            if (podcastscontext.Podcasts.Any())
+            // Look for any podcasts.
+            if (podcastsContext.Podcasts.Any())
             {
-                return;   // DB table(Users) has been seeded
+                return;   // DB table(Podcasts) has been seeded
             }
 
-            podcastscontext.Podcasts.AddRange(
+            podcastsContext.Podcasts.AddRange(
                 new Podcast
                 {
-                    Title = "Grrece",
+                    Title = "Greece",
                     Url = "https://en.wikipedia.org/wiki/Greece",
                     Author = "oanmax",
                     NumberOfEpisodes = 1,
@@ -89,35 +77,31 @@ namespace PodcastsWebApi.Models
                     Picture = "A lazy picture"
                 }
             );
-            podcastscontext.SaveChanges();
+            podcastsContext.SaveChanges();
         }
 
-        private static void SeedEpisodes(EpisodesContext episodescontext)
+        private static void SeedEpisodes(PodcastsContext podcastsContext)
         {
             // Look for any episodes.
-            if (episodescontext.Episodes.Any())
+            if (podcastsContext.Episodes.Any())
             {
                 return;   // DB table(Episodes) has been seeded
             }
 
-            episodescontext.Episodes.AddRange(
+            podcastsContext.Episodes.AddRange(
                 new Episodes
                 {
                     Title = "First day of Summer",
-                    Description = "21st June",
-                    Podcast = 
+                    Description = "1st June"              
                 },
 
                 new Episodes
                 {
-                    Title = "Summer Time",
-                    Url = "https://en.wikipedia.org/wiki/Summer",
-                    Author = "oanmax",
-                    NumberOfEpisodes = 2,
-                    Picture = "A lazy picture"
+                    Title = "Summer solstice",
+                    Description = "21st June"
                 }
             );
-            episodescontext.SaveChanges();
+            podcastsContext.SaveChanges();
         }
     }
 }

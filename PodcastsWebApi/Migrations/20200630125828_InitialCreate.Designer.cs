@@ -8,7 +8,7 @@ using PodcastsWebApi.Models;
 
 namespace PodcastsWebApi.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(PodcastsContext))]
     [Migration("20200630125828_InitialCreate")]
     partial class InitialCreate
     {

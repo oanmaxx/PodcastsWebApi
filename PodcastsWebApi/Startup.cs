@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using PodcastsWebApi.Models;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using System.Reflection;
 
 namespace PodcastsWebApi
 {
@@ -20,18 +23,13 @@ namespace PodcastsWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddDbContext<UserContext>(options =>
+            services
+                .AddControllers()
+                //registered validators
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddDbContext<PodcastsContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("UserConnectionString"));
-            });
-            services.AddDbContext<PodcastContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("PodcastConnectionString"));
-            });
-            services.AddDbContext<EpisodesContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("EpisodesConnectionString"));
+                options.UseSqlServer(Configuration.GetConnectionString("PodcastsConnectionString"));
             });
         }
 

@@ -13,9 +13,9 @@ namespace PodcastsWebApi.Controllers
     [ApiController]
     public class PodcastsController : ControllerBase
     {
-        private readonly PodcastContext _context;
+        private readonly PodcastsContext _context;
 
-        public PodcastsController(PodcastContext context)
+        public PodcastsController(PodcastsContext context)
         {
             _context = context;
         }
