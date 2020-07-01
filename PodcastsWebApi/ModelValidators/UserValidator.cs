@@ -12,6 +12,10 @@ namespace PodcastsWebApi.ModelValidators
 		public UserValidator()
 		{
 			RuleFor(x => x.Id).NotNull();
+
+
+		// FirstName LastName UserName  Password EmailAddress
+
 		}
 	}
 }
