@@ -23,6 +23,13 @@ namespace PodcastsWebApi.Models
             {
                 SeedPodcasts(podcastscontext);
             }
+
+            using (var episodescontext = new EpisodesContext(
+                serviceProvider.GetRequiredService<
+                    DbContextOptions<EpisodesContext>>()))
+            {
+                SeedEpisodes(episodescontext);
+            }
         }
 
         private static void SeedUsers(UserContext usercontext)
@@ -85,25 +92,23 @@ namespace PodcastsWebApi.Models
             podcastscontext.SaveChanges();
         }
 
-        private static void SeedEpisodes(PodcastContext episodescontext)
+        private static void SeedEpisodes(EpisodesContext episodescontext)
         {
-            // Look for any users.
-            if (episodescontext.Podcasts.Any())
+            // Look for any episodes.
+            if (episodescontext.Episodes.Any())
             {
-                return;   // DB table(Users) has been seeded
+                return;   // DB table(Episodes) has been seeded
             }
 
-            episodescontext.Podcasts.AddRange(
-                new Podcast
+            episodescontext.Episodes.AddRange(
+                new Episodes
                 {
-                    Title = "Grrece",
-                    Url = "https://en.wikipedia.org/wiki/Greece",
-                    Author = "oanmax",
-                    NumberOfEpisodes = 1,
-                    Picture = "A picture from Greece"
+                    Title = "First day of Summer",
+                    Description = "21st June",
+                    Podcast = 
                 },
 
-                new Podcast
+                new Episodes
                 {
                     Title = "Summer Time",
                     Url = "https://en.wikipedia.org/wiki/Summer",

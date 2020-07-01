@@ -13,6 +13,6 @@ namespace PodcastsWebApi.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public Podcast podcast;
+        public Podcast Podcast { get; set; }
     }
 }

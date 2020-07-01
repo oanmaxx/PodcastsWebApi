@@ -14,5 +14,6 @@ namespace PodcastsWebApi.Models
         public int NumberOfEpisodes { get; set; }
         public string Picture { get; set; } 
 
+        public List<Episodes> Episodes { get; set; }
     }
 }
