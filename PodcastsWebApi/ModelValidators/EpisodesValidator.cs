@@ -10,9 +10,6 @@ namespace PodcastsWebApi.ModelValidators
 		{
 			RuleFor(x => x.Id).NotNull();
 
-
-			// title url author numberofepisodes picture public List<Episodes> Episodes { get; set; }
-
 		}
 	}
 }

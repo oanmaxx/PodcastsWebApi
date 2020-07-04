@@ -1,0 +1,34 @@
+<h1 id="tableLabel">Podcasts</h1>
+
+<p>This component retrieves podcasts from the server.</p>
+
+<p *ngIf="!podcasts"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="podcasts">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Author</th>
+      <th>NumberOfEpisodes</th>
+      <th>Picture</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let podcast of podcasts">
+      <td>{{ podcast.id }}</td>
+      <td>{{ podcast.title }}</td>
+      <td>{{ podcast.url }}</td>
+      <td>{{ podcast.author }}</td>
+      <td>{{ podcast.numberOfEpisodes }}</td>
+      <td>{{ podcast.picture }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="removePodcast(podcast.id)">Remove</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-primary" (click)="findPodcast()">Find Podcast</button>

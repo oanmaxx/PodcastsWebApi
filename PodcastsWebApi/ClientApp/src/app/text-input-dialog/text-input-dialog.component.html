@@ -1,0 +1,6 @@
+<h2>{{title}}</h2>
+<p>{{message}}</p>
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Podcast URL:" #input>
+</mat-form-field>
+<button mat-button (click)="onOk.emit(input.value); dialog.close()">OK</button>

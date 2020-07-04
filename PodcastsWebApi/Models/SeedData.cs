@@ -91,14 +91,22 @@ namespace PodcastsWebApi.Models
             podcastsContext.Episodes.AddRange(
                 new Episodes
                 {
+                    Title = "Greece",
+                    Description = "Fauna",
+                    Podcast = podcastsContext.Podcasts.ElementAt(0)
+                },
+                new Episodes
+                {
                     Title = "First day of Summer",
-                    Description = "1st June"              
+                    Description = "1st June",
+                    Podcast = podcastsContext.Podcasts.ElementAt(1)
                 },
 
                 new Episodes
                 {
                     Title = "Summer solstice",
-                    Description = "21st June"
+                    Description = "21st June",
+                    Podcast = podcastsContext.Podcasts.ElementAt(1)
                 }
             );
             podcastsContext.SaveChanges();
