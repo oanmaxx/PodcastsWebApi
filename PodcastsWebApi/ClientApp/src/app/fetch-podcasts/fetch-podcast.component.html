@@ -4,6 +4,11 @@
 
 <p *ngIf="!podcasts"><em>Loading...</em></p>
 
+<mat-form-field *ngIf="podcasts" class="example-full-width">
+  <input #searchBox matInput placeholder="Search..." (keyup.enter)="onSearch(searchBox.value)">
+  <mat-hint>Search for a podcast title.</mat-hint>    
+</mat-form-field>
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="podcasts">
   <thead>
     <tr>
@@ -35,4 +40,4 @@
   </tbody>
 </table>
 
-<button class="btn btn-primary" (click)="findPodcast()">Find Podcast</button>
+<button class="btn btn-primary" (click)="findPodcast()">Add Podcast</button>

@@ -27,6 +27,13 @@ namespace PodcastsWebApi.Controllers
             return await _context.Podcasts.ToListAsync();
         }
 
+        // GET: api/Podcasts/filter/something
+        [HttpGet("[action]/{filter}")]
+        public async Task<ActionResult<IEnumerable<Podcast>>> Filter(string filter)
+        {
+            return await _context.Podcasts.Where(a=>a.Title.Contains(filter)).ToListAsync();
+        }
+
         // GET: api/Podcasts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Podcast>> GetPodcast(long id)

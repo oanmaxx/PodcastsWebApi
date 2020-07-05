@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Podcast } from '../fetch-podcasts/fetch-podcast.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-fetch-episodes',
@@ -14,7 +15,16 @@ export class FetchEpisodesComponent {
   private httpContext: HttpClient;
   private baseUrl: string;
 
-  constructor(http: HttpClient, route: ActivatedRoute, @Inject('BASE_URL') baseUrl: string) {
+  constructor(
+    http: HttpClient,
+    route: ActivatedRoute,
+    @Inject('BASE_URL') baseUrl: string,
+    router: Router) {
+
+    if (HomeComponent.GetLoggedInUser() == null) {
+      router.navigate(['/']);
+    }
+
     this.httpContext = http;
     this.baseUrl = baseUrl;
     

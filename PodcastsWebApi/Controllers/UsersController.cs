@@ -41,6 +41,15 @@ namespace PodcastsWebApi.Controllers
             return user;
         }
 
+        // GET: api/Users/oan.max@gmail.com/pass
+        [HttpGet("[action]/{email}/{password}")]
+        public User LoginUser(string email, string password)
+        {
+            var user = _context.Users.Where(e => e.EmailAddress == email && e.Password == password).FirstOrDefault();
+
+            return user;
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

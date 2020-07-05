@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { FetchEpisodesComponent } from '../fetch-episodes/fetch-episodes.component';
+import { HomeComponent } from '../home/home.component';
+import { Router } from '@angular/router';
 
 // This tells TypeScript that you know this will be available globally during runtime.
 // Unfortunately, RSSParser has no TS Declarations, so you have to use any or make a more concrete type yourself
@@ -20,19 +22,30 @@ export class FetchPodcastComponent {
   constructor(
     http: HttpClient,
     @Inject('BASE_URL') baseUrl: string,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    router: Router) {
+
+    if (HomeComponent.GetLoggedInUser() == null) {
+      router.navigate(['/']);
+    }
    
     this.httpContext = http;
     this.baseUrl = baseUrl;
 
-    this.readPodcasts();
+    this.readPodcasts("");
   }
 
-  // CRUD - read
-  readPodcasts() {
-    this.httpContext.get<Podcast[]>(this.baseUrl + 'api/podcasts').subscribe(result => {
-      this.podcasts = result;
-    }, error => console.error(error));
+  // CRUD - read, filter
+  readPodcasts(filter: string) {
+    if (filter.length == 0) {
+      this.httpContext.get<Podcast[]>(this.baseUrl + 'api/podcasts').subscribe(result => {
+        this.podcasts = result;
+      }, error => console.error(error));
+    } else {
+      this.httpContext.get<Podcast[]>(this.baseUrl + 'api/podcasts/filter/' + filter).subscribe(result => {
+        this.podcasts = result;
+      }, error => console.error(error));
+    }
   }
 
   // CRUD - delete
@@ -142,6 +155,11 @@ export class FetchPodcastComponent {
         error => {
           console.error(error);
         });
+  }
+
+  // Search podcasts
+  public onSearch(searchInfo: string) {
+    this.readPodcasts(searchInfo);
   }
 }
 

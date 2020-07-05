@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-nav-menu',
@@ -14,5 +15,13 @@ export class NavMenuComponent {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  public isShowingPodcasts() {
+    if (HomeComponent.GetLoggedInUser() != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
