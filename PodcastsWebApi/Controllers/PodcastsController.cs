@@ -45,7 +45,7 @@ namespace PodcastsWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPodcast(long id, Podcast podcast)
+        public async Task<ActionResult<Podcast>> PutPodcast(long id, Podcast podcast)
         {
             if (id != podcast.Id)
             {
@@ -70,7 +70,7 @@ namespace PodcastsWebApi.Controllers
                 }
             }
 
-            return NoContent();
+            return podcast;
         }
 
         // POST: api/Podcasts

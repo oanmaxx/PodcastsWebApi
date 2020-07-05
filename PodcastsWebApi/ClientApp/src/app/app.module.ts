@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { FetchPodcastComponent } from './fetch-podcasts/fetch-podcast.component';
+import { FetchEpisodesComponent } from './fetch-episodes/fetch-episodes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputDialogComponent } from './text-input-dialog/text-input-dialog.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
@@ -22,6 +23,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule } 
     CounterComponent,
     FetchDataComponent,
     FetchPodcastComponent,
+    FetchEpisodesComponent,
     TextInputDialogComponent
   ],
   imports: [
@@ -33,6 +35,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule } 
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'fetch-podcast', component: FetchPodcastComponent },
+      { path: 'fetch-episodes', component: FetchEpisodesComponent },
     ]),
     BrowserAnimationsModule,
     MatButtonModule,

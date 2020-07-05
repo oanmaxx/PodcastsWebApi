@@ -21,10 +21,17 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Episodes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Episodes>>> GetEpisodes()
+        [HttpGet("[action]/{id}")]
+        public IEnumerable<Episodes> PodcastEpisodes(long id)
         {
-            return await _context.Episodes.ToListAsync();
+            var episodes = _context.Episodes.Where(a => a.PodcastId == id).ToList();
+
+            if (episodes == null)
+            {
+                return new List<Episodes>();
+            }
+
+            return episodes;
         }
 
         // GET: api/Episodes/5
@@ -45,7 +52,7 @@ namespace PodcastsWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEpisodes(long id, Episodes episodes)
+        public async Task<ActionResult<Episodes>> PutEpisodes(long id, Episodes episodes)
         {
             if (id != episodes.Id)
             {
@@ -70,7 +77,7 @@ namespace PodcastsWebApi.Controllers
                 }
             }
 
-            return NoContent();
+            return episodes;
         }
 
         // POST: api/Episodes

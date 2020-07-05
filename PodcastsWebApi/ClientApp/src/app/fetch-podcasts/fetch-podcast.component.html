@@ -14,18 +14,22 @@
       <th>NumberOfEpisodes</th>
       <th>Picture</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let podcast of podcasts">
       <td>{{ podcast.id }}</td>
-      <td>{{ podcast.title }}</td>
+      <td><a href="/fetch-episodes?podcast={{ podcast.id }}">{{ podcast.title }}</a></td>
       <td>{{ podcast.url }}</td>
       <td>{{ podcast.author }}</td>
       <td>{{ podcast.numberOfEpisodes }}</td>
       <td>{{ podcast.picture }}</td>
       <td>
         <button class="btn btn-primary" (click)="removePodcast(podcast.id)">Remove</button>
+      </td>
+      <td>
+        <button class="btn btn-primary" (click)="refreshPodcast(podcast.id)">Refresh</button>
       </td>
     </tr>
   </tbody>

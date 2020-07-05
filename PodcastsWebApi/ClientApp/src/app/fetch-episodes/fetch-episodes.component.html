@@ -1,0 +1,32 @@
+<h1 id="tableLabel">{{podcastTitle}}</h1>
+<h2 id="tableLabel">Episodes</h2>
+
+<p *ngIf="!episodes"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="episodes">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Author</th>
+      <th>Picture</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let episode of episodes">
+      <td>{{ episode.id }}</td>
+      <td>{{ episode.title }}</td>
+      <td>{{ episode.description }}</td>
+      <td>{{ episode.author }}</td>
+      <td>{{ episode.picture }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="playEpisode(episode.link)">View</button>
+      </td>
+      <td>
+        <button class="btn btn-primary" (click)="removeEpisode(episode.id)">Remove</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
