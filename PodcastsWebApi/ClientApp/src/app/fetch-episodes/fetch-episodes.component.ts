@@ -116,11 +116,14 @@ export class FetchEpisodesComponent {
 
       var pictureUrl = episode.picture ? episode.picture : '';
       var author = episode.author != null ? episode.author : 'Mixed';
+      var descriptionTrim = episode.content.length > 100
+        ? episode.content.slice(0, 100) + "..."
+        : episode.content;
       var newEpisode = {
         id: 0,
         podcastid: inputpodcastid,
         title: episode.title,
-        description: episode.content,
+        description: descriptionTrim,
         author: author,
         picture: pictureUrl,
         link: episode.link,
