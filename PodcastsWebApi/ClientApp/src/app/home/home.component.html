@@ -24,10 +24,16 @@
 
   <button class="btn btn-primary" (click)="login()">Login</button>
   <h3>{{lastLoginError}}</h3>
+
+  <div>
+    <button (click)="authenticate()">Google Authenticate</button>
+    <h6 style="color:indianred">{{googleError.error}}</h6>
+  </div>
 </div>
 
 <div *ngIf="isLoggedIn" class="example-form">
   <h1>Hello, {{ LoggedUserName()}} </h1>
+  <h3>{{LoggedUserEmail()}}</h3>
   <em>Please take your time to browse through our podcasts.</em>
   <p></p>
   <button class="btn btn-primary" (click)="logout()">Logout</button>
