@@ -93,6 +93,11 @@ export class HomeComponent {
   }
 
   public logout() {
+    if (HomeComponent.loggedInUser.googleId != null) {
+      this.authInstance.disconnect();
+      this.authInstance.signOut();
+    }
+
     HomeComponent.loggedInUser = null;
     localStorage.removeItem('loggeduser');
     this.isLoggedIn = false;
