@@ -34,6 +34,20 @@ namespace PodcastsWebApi.Controllers
             return episodes;
         }
 
+        // GET: api/Episodes
+        [HttpGet("[action]/{id}/{filter}")]
+        public IEnumerable<Episodes> PodcastEpisodesFilter(long id, string filter)
+        {
+            var episodes = _context.Episodes.Where(a => a.PodcastId == id && a.Title.Contains(filter)).ToList();
+
+            if (episodes == null)
+            {
+                return new List<Episodes>();
+            }
+
+            return episodes;
+        }
+
         // GET: api/Episodes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Episodes>> GetEpisodes(long id)

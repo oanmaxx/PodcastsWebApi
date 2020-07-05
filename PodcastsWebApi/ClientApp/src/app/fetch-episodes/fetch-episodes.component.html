@@ -3,6 +3,11 @@
 
 <p *ngIf="!episodes"><em>Loading...</em></p>
 
+<mat-form-field *ngIf="episodes" class="example-full-width">
+  <input #searchEpisodeBox matInput placeholder="Search..." (keyup.enter)="onSearchEpisode(searchEpisodeBox.value)">
+  <mat-hint>Search for an episode title.</mat-hint>
+</mat-form-field>
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="episodes">
   <thead>
     <tr>

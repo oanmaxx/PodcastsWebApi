@@ -9,6 +9,7 @@ import { HomeComponent } from '../home/home.component';
   templateUrl: './fetch-episodes.component.html'
 })
 export class FetchEpisodesComponent {
+  private static lastSelectedPodcastId: number;
   public episodes: Episodes[];
   public podcastTitle: string;
   public podcastId: number;
@@ -27,16 +28,23 @@ export class FetchEpisodesComponent {
 
     this.httpContext = http;
     this.baseUrl = baseUrl;
-    
-    if (route.snapshot.queryParams['podcast']) {
-      let podcastId = route.snapshot.queryParams['podcast'];
+
+    let podcastId = route.snapshot.queryParams['podcast'] ? route.snapshot.queryParams['podcast'] : 0;
+    if (!podcastId) {
+      podcastId = FetchEpisodesComponent.lastSelectedPodcastId;
+    } else {
+      FetchEpisodesComponent.lastSelectedPodcastId = podcastId;
+    }
+
+    this.podcastId = 0;
+
+    if (podcastId) {
       this.httpContext.get<Podcast>(this.baseUrl + 'api/podcasts/' + podcastId).subscribe(
         result => {
           this.podcastTitle = result.title;
           this.podcastId = result.id;
 
-          this.readEpisodes(this.podcastId);
-
+          this.readEpisodes(this.podcastId, "");
         },
         error => {
           console.error(error)
@@ -45,18 +53,28 @@ export class FetchEpisodesComponent {
       this.podcastTitle = "There is no active podcast selected.";
     }
 
-    this.readEpisodes(0);
+    this.readEpisodes(this.podcastId, "");
   }
 
   // CRUD - read
-  public readEpisodes(podcastId: number) {
+  public readEpisodes(podcastId: number, filter: string) {
     if (podcastId > 0) {
-      this.httpContext.get<Episodes[]>(this.baseUrl + 'api/episodes/podcastepisodes/' + podcastId).subscribe(result => {
-        this.episodes = result;
-      }, error => console.error(error));
+      if (filter.length == 0) {
+        this.httpContext.get<Episodes[]>(this.baseUrl + 'api/episodes/podcastepisodes/' + podcastId).subscribe(result => {
+          this.episodes = result;
+        }, error => console.error(error));
+      } else {
+        this.httpContext.get<Episodes[]>(this.baseUrl + 'api/episodes/podcastepisodesfilter/' + podcastId + "/" + filter).subscribe(result => {
+          this.episodes = result;
+        }, error => console.error(error));
+      }
     } else {
       this.episodes = [];
     }
+  }
+
+  public onSearchEpisode(filter: string) {
+    this.readEpisodes(this.podcastId, filter);
   }
 
   // CRUD - delete
