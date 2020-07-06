@@ -21,6 +21,10 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Favorites
+        /// <summary>
+        /// Gets all favorites podcasts.
+        /// </summary>
+        /// <returns>Returns a list of favorites podcasts.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Favorites>>> GetFavorites()
         {
@@ -28,6 +32,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Favorites/5
+        /// <summary>
+        /// Gets favorites podcasts based on email user.
+        /// </summary>
+        /// <param name="email">The user email.</param>
+        /// <returns>Returns a list of favorites podcasts.</returns>
         [HttpGet("{email}")]
         public async Task<IEnumerable<Favorites>> GetFavorites(string email)
         {
@@ -44,6 +53,12 @@ namespace PodcastsWebApi.Controllers
         // PUT: api/Favorites/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">The favorite podcast ID.</param>
+        /// <param name="favorite">The favorite podcast.</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Favorites>> PutFavorites(long id, Favorites favorite)
         {
@@ -76,6 +91,11 @@ namespace PodcastsWebApi.Controllers
         // POST: api/Favorites
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Adds a preffered podcast to the list.
+        /// </summary>
+        /// <param name="favorite">A preferred podcast.</param>
+        /// <returns>Returns a favorite podcast.</returns>
         [HttpPost]
         public async Task<ActionResult<Podcast>> PostFavorites(Favorites favorite)
         {
@@ -86,6 +106,12 @@ namespace PodcastsWebApi.Controllers
         }
 
         // DELETE: api/Podcasts/5
+        /// <summary>
+        /// Deletes a favorite podcast based on user email and podcast ID.
+        /// </summary>
+        /// <param name="email">The user email.</param>
+        /// <param name="podcastid">The favorite podcast ID that needs to be deleted.</param>
+        /// <returns>Returns the favorite podcast that needs to be deleted.</returns>
         [HttpDelete("{email}/{podcastid}")]
         public async Task<Favorites> DeleteFavorites(string email, long podcastid)
         {

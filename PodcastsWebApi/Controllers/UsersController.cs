@@ -21,6 +21,10 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Users
+        /// <summary>
+        /// Gets a list of all users.
+        /// </summary>
+        /// <returns>Returns all users in a list.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -28,6 +32,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Users/5
+        /// <summary>
+        /// Find user based on ID.
+        /// </summary>
+        /// <param name="id">The user ID></param>
+        /// <returns>Returns the user with the given ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
@@ -42,6 +51,12 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Users/oan.max@gmail.com/pass
+        /// <summary>
+        /// Gets the user with the given email and password.
+        /// </summary>
+        /// <param name="email">The user email.</param>
+        /// <param name="password">The email password of the given user..</param>
+        /// <returns>Returns the user with the specified email and password.</returns>
         [HttpGet("[action]/{email}/{password}")]
         public User LoginUser(string email, string password)
         {
@@ -53,6 +68,12 @@ namespace PodcastsWebApi.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Updates a user based on ID.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <param name="user">The user that needs to pe updated.</param>
+        /// <returns>Returns a succes status response with no body.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(long id, User user)
         {
@@ -85,6 +106,11 @@ namespace PodcastsWebApi.Controllers
         // POST: api/Users
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Adds a user.
+        /// </summary>
+        /// <param name="user">The user that needs to be added.</param>
+        /// <returns>Returns a user.</returns>
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -95,6 +121,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // DELETE: api/Users/5
+        /// <summary>
+        /// Deletes a user based on ID.
+        /// </summary>
+        /// <param name="id">The user ID that must be deleted.</param>
+        /// <returns>Returns the user that must be deleted.</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(long id)
         {

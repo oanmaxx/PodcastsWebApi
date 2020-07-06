@@ -21,6 +21,10 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Podcasts
+        /// <summary>
+        /// Gets all podcasts.
+        /// </summary>
+        /// <returns>Returns a list of all podcasts.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Podcast>>> GetPodcasts()
         {
@@ -28,6 +32,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Podcasts/filter/something
+        /// <summary>
+        /// Finds the podcasts based on a title filter.
+        /// </summary>
+        /// <param name="filter">A filter for podcast title.</param>
+        /// <returns>Returns a list of Podcasts.</returns>
         [HttpGet("[action]/{filter}")]
         public async Task<ActionResult<IEnumerable<Podcast>>> Filter(string filter)
         {
@@ -35,6 +44,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Podcasts/5
+        /// <summary>
+        /// Finds podcast based on ID.
+        /// </summary>
+        /// <param name="id">The podcast ID.</param>
+        /// <returns>Returns a podcast.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Podcast>> GetPodcast(long id)
         {
@@ -51,6 +65,12 @@ namespace PodcastsWebApi.Controllers
         // PUT: api/Podcasts/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Updates an existing podcast.
+        /// </summary>
+        /// <param name="id">The podcast ID.</param>
+        /// <param name="podcast">The podcast.</param>
+        /// <returns>The updated podcast.</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Podcast>> PutPodcast(long id, Podcast podcast)
         {
@@ -83,6 +103,11 @@ namespace PodcastsWebApi.Controllers
         // POST: api/Podcasts
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Adds a podcast.
+        /// </summary>
+        /// <param name="podcast">The given podcast.</param>
+        /// <returns>returns a podcast.</returns>
         [HttpPost]
         public async Task<ActionResult<Podcast>> PostPodcast(Podcast podcast)
         {
@@ -93,6 +118,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // DELETE: api/Podcasts/5
+        /// <summary>
+        /// Deletes a podcast with a given id.
+        /// </summary>
+        /// <param name="id">The podcast id.</param>
+        /// <returns>The podcast that needs to be deleted.</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Podcast>> DeletePodcast(long id)
         {

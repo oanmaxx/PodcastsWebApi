@@ -21,6 +21,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Episodes
+        /// <summary>
+        /// Gets a list of all episodes of a given podcast.
+        /// </summary>
+        /// <param name="id">The ID of the podcast.</param>
+        /// <returns>Returns a list of all episodes. Request must be made by a logged in user.</returns>
         [HttpGet("[action]/{id}")]
         public IEnumerable<Episodes> PodcastEpisodes(long id)
         {
@@ -35,6 +40,12 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Episodes
+        /// <summary>
+        /// Gets a list of episodes of a podcast with a given ID.
+        /// </summary>
+        /// <param name="id">The ID of the podcast.</param>
+        /// <param name="filter"></param>
+        /// <returns>A list of episodes.</returns>
         [HttpGet("[action]/{id}/{filter}")]
         public IEnumerable<Episodes> PodcastEpisodesFilter(long id, string filter)
         {
@@ -49,6 +60,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // GET: api/Episodes/5
+        /// <summary>
+        /// Finds an episode by ID.
+        /// </summary>
+        /// <param name="id">The episode ID.</param>
+        /// <returns>Returns an episode based on ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Episodes>> GetEpisodes(long id)
         {
@@ -65,6 +81,12 @@ namespace PodcastsWebApi.Controllers
         // PUT: api/Episodes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Updates an existing episode based on ID.
+        /// </summary>
+        /// <param name="id">The episode ID.</param>
+        /// <param name="episodes">The episode.</param>
+        /// <returns>Returns the episode.</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Episodes>> PutEpisodes(long id, Episodes episodes)
         {
@@ -97,6 +119,11 @@ namespace PodcastsWebApi.Controllers
         // POST: api/Episodes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Posts episodes.
+        /// </summary>
+        /// <param name="episodes">The episodes which will be added.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Episodes>> PostEpisodes(Episodes episodes)
         {
@@ -107,6 +134,11 @@ namespace PodcastsWebApi.Controllers
         }
 
         // DELETE: api/Episodes/5
+        /// <summary>
+        /// Deletes the episode with the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the episode.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Episodes>> DeleteEpisodes(long id)
         {
