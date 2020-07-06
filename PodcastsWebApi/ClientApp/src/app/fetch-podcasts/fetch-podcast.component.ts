@@ -12,7 +12,8 @@ declare const RSSParser: any;
 
 @Component({
   selector: 'app-fetch-podcast',
-  templateUrl: './fetch-podcast.component.html'
+  templateUrl: './fetch-podcast.component.html',
+  styleUrls: ['./fetch-podcast.component.css']  
 })
 export class FetchPodcastComponent {
   public podcasts: Podcast[];
@@ -32,18 +33,24 @@ export class FetchPodcastComponent {
     this.httpContext = http;
     this.baseUrl = baseUrl;
 
-    this.readPodcasts("");
+    this.readPodcasts();
   }
 
   // CRUD - read, filter
-  readPodcasts(filter: string) {
+  readPodcasts() {
+    var filter = this.searchInfo;
     if (filter.length == 0) {
       this.httpContext.get<Podcast[]>(this.baseUrl + 'api/podcasts').subscribe(result => {
         this.podcasts = result;
+
+        this.fetchFavoritesInfo();
+
       }, error => console.error(error));
     } else {
       this.httpContext.get<Podcast[]>(this.baseUrl + 'api/podcasts/filter/' + filter).subscribe(result => {
         this.podcasts = result;
+
+        this.fetchFavoritesInfo();
       }, error => console.error(error));
     }
   }
@@ -111,7 +118,8 @@ export class FetchPodcastComponent {
       url: feed.feedUrl,
       numberOfEpisodes: feed.items.length,
       picture: pictureUrl,
-      author: author
+      author: author,
+      isFavorite: false
     };
 
     return newPodcast;
@@ -149,6 +157,7 @@ export class FetchPodcastComponent {
         result => {
           console.log(result);
           this.podcasts[index] = updatePodcast;
+          this.fetchFavoritesInfo();
 
           FetchEpisodesComponent.updateEpisodes(this.httpContext, this.baseUrl, result.id, feed.items);
         },
@@ -158,8 +167,72 @@ export class FetchPodcastComponent {
   }
 
   // Search podcasts
+  private searchInfo: string = "";
   public onSearch(searchInfo: string) {
-    this.readPodcasts(searchInfo);
+    this.searchInfo = searchInfo;
+    this.readPodcasts();
+  }
+
+  // Favorite podcast
+  private fullHeartImageUrl = "./full-heart-fav.png";
+  private emptyHeartImageUrl = "./empty-heart-fav.png";
+  public GetFavoriteIconUrl(isFavorite: boolean) {
+    if (isFavorite) {      
+      return this.fullHeartImageUrl;
+    }
+    return this.emptyHeartImageUrl;
+  }
+
+  public favoritePodcast(podcastId) {
+    var podcast = this.podcasts.find(p => p.id == podcastId);
+    var oldFavorite = podcast.isFavorite;
+    var newFavorite = !podcast.isFavorite;    
+
+    var favoriteObject = {
+      email: HomeComponent.GetLoggedInUser().emailAddress,
+      podcast: podcastId
+    };
+    if (oldFavorite) {
+      // delete favorite
+      this.httpContext.delete(this.baseUrl + 'api/favorites/' + favoriteObject.email + '/' + favoriteObject.podcast)
+        .subscribe(
+          result => podcast.isFavorite = newFavorite,
+          error => console.error(error));
+    } else {
+      // create favorite
+      this.httpContext.post(this.baseUrl + 'api/favorites/', favoriteObject)
+        .subscribe(
+          result => podcast.isFavorite = newFavorite,
+          error => console.error(error));
+    }
+  }
+
+  private fetchFavoritesInfo() {
+    let email = HomeComponent.GetLoggedInUser().emailAddress;
+    this.httpContext.get<Favorites[]>(this.baseUrl + 'api/favorites/' + email).subscribe(
+      result => {
+        let allPodcasts = this.podcasts;
+        result.forEach(function (value) {
+          let podcast = allPodcasts.find(a => a.id == value.podcast) as Podcast;
+          if (podcast) {
+            podcast.isFavorite = true;
+          }
+        });
+        
+        if (this.showFavoritesOnly) {
+          this.podcasts = this.podcasts.filter(a => a.isFavorite == true);
+        }
+      },
+      error => {
+        console.error(error)
+      });
+  }
+
+  private showFavoritesOnly = false;
+  public filterFavorites(checked: boolean) {
+    console.log(checked ? "Showing only favorites" : "Showing all podcasts");
+    this.showFavoritesOnly = checked;
+    this.readPodcasts()
   }
 }
 
@@ -170,4 +243,11 @@ export interface Podcast {
   author: string;
   numberOfEpisodes: number;
   picture: string;
+  isFavorite: boolean;
+}
+
+interface Favorites {
+  id: number;
+  email: string;
+  podcast: number;
 }

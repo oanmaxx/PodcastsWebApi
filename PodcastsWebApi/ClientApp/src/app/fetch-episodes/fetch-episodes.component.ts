@@ -6,7 +6,8 @@ import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-fetch-episodes',
-  templateUrl: './fetch-episodes.component.html'
+  templateUrl: './fetch-episodes.component.html',
+  styleUrls: ['./fetch-episodes.component.css'],
 })
 export class FetchEpisodesComponent {
   private static lastSelectedPodcastId: number;
@@ -234,7 +235,7 @@ interface Episodes {
   author: string;
   picture: string;
   link: string;
-  pubDate: string;
+  pubDate: string;  
 
   //item
   content: string;

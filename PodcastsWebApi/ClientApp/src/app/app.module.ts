@@ -13,7 +13,7 @@ import { FetchPodcastComponent } from './fetch-podcasts/fetch-podcast.component'
 import { FetchEpisodesComponent } from './fetch-episodes/fetch-episodes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputDialogComponent } from './text-input-dialog/text-input-dialog.component';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule } 
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     TextInputDialogComponent

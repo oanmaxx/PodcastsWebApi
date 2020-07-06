@@ -1,0 +1,15 @@
+.podcasts-table {
+    max-width: 100%;
+}
+
+.podcast-picture {
+    width: 100px;
+}
+
+.favorites-check {
+    float: right;
+}
+
+.search-input {
+    float:left;
+}

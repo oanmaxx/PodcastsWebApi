@@ -93,7 +93,7 @@ export class HomeComponent {
   }
 
   public logout() {
-    if (HomeComponent.loggedInUser.googleId != null) {
+    if (HomeComponent.loggedInUser.googleId != null && this.authInstance != null) {      
       this.authInstance.disconnect();
       this.authInstance.signOut();
     }

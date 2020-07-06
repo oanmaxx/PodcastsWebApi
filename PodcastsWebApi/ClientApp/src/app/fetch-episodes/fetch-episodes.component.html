@@ -29,8 +29,7 @@
       <td>{{ episode.title }}</td>
       <td style="overflow:auto; max-width:300px; max-height:200px">{{ episode.description }}</td>
       <td>{{ episode.author }}</td>
-      <td>{{ episode.picture }}</td>
-
+      <td><img class="episode-picture" src="{{ episode.picture }}" alt="No Image" /></td>
       <td>
         <button class="btn btn-primary" (click)="removeEpisode(episode.id)">Remove</button>
       </td>
