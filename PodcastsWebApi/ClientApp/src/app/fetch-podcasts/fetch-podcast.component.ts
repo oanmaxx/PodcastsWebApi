@@ -92,6 +92,7 @@ export class FetchPodcastComponent {
       this.getPodcastContentThroughCORSProxy(
         result,
         feed => {
+          feed.feedUrl = result;
           this.createPodcast(feed);
         }
       )
@@ -116,7 +117,12 @@ export class FetchPodcastComponent {
   }
 
   private readPodcastInfo(feed): Podcast {
-    var pictureUrl = feed.image ? feed.image.url : '';
+    var pictureUrl = '';
+    if (feed.image !== undefined) {
+      pictureUrl = feed.image.url;
+    } else if (feed.itunes.image !== undefined) {
+      pictureUrl = feed.itunes.image;
+    }
     var author = feed.managingEditor != null ? feed.managingEditor : 'Mixed';
 
     var newPodcast = {
@@ -151,6 +157,7 @@ export class FetchPodcastComponent {
     this.getPodcastContentThroughCORSProxy(
       this.podcasts[index].url,
       feed => {
+        feed.feedUrl = this.podcasts[index].url;
         this.updatePodcast(inputId, index, feed);
       }
     )

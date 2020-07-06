@@ -128,7 +128,11 @@ export class FetchEpisodesComponent {
     for (var i = 0; i < items.length; i++) {
       var episode = items[i] as Episodes;
 
-      var pictureUrl = episode.picture ? episode.picture : '';
+      var pictureUrl = '';
+      if (episode['itunes'] != undefined && episode['itunes']['image'] != undefined) {
+        pictureUrl = episode['itunes']['image'];
+      }
+      
       var author = episode.author != null ? episode.author : 'Mixed';
       var descriptionTrim = episode.content.length > 100
         ? episode.content.slice(0, 100) + "..."
