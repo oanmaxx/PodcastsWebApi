@@ -4,6 +4,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { React, JSX } from 'react-jsx';
 import { GoogleLoginButton } from 'ts-react-google-login-component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmationDialog } from '../confirm-dialog/confirmation-dialog';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -24,7 +26,10 @@ export class HomeComponent {
   public isLoggedIn: boolean;
   public lastLoginError: string;
 
-  constructor(private httpContext: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(
+    private httpContext: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string,
+    public confirmDialog: MatDialog) {
     if (HomeComponent.GetLoggedInUser() != null) {
       this.isLoggedIn = true;
     }
@@ -90,6 +95,16 @@ export class HomeComponent {
       console.error("Invalid credentials.");
       this.lastLoginError = "Invalid credentials.";
     }
+  }
+
+  public logoutConfirm() {
+    var dialogConfirmRef: MatDialogRef<ConfirmationDialog> = this.confirmDialog.open(ConfirmationDialog);
+    dialogConfirmRef.componentInstance.confirmMessage = 'Really logging out?';
+    dialogConfirmRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.logout();
+      }
+    });
   }
 
   public logout() {

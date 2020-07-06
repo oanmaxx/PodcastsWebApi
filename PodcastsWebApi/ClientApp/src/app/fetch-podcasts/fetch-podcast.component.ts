@@ -5,6 +5,7 @@ import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog
 import { FetchEpisodesComponent } from '../fetch-episodes/fetch-episodes.component';
 import { HomeComponent } from '../home/home.component';
 import { Router } from '@angular/router';
+import { ConfirmationDialog } from '../confirm-dialog/confirmation-dialog';
 
 // This tells TypeScript that you know this will be available globally during runtime.
 // Unfortunately, RSSParser has no TS Declarations, so you have to use any or make a more concrete type yourself
@@ -24,6 +25,7 @@ export class FetchPodcastComponent {
     http: HttpClient,
     @Inject('BASE_URL') baseUrl: string,
     public dialog: MatDialog,
+    public confirmDialog: MatDialog,
     router: Router) {
 
     if (HomeComponent.GetLoggedInUser() == null) {
@@ -56,7 +58,17 @@ export class FetchPodcastComponent {
   }
 
   // CRUD - delete
-  removePodcast(inputId: number) {
+  public removePodcastConfirm(inputId: number) {
+    var dialogConfirmRef: MatDialogRef<ConfirmationDialog> = this.confirmDialog.open(ConfirmationDialog);
+    dialogConfirmRef.componentInstance.confirmMessage = 'Remove podcast?';
+    dialogConfirmRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.removePodcast(inputId);
+      }
+    });
+  }
+
+  private removePodcast(inputId: number) {
     this.httpContext
       .delete<number>(this.baseUrl + 'api/podcasts/' + inputId)
       .subscribe(
@@ -126,16 +138,31 @@ export class FetchPodcastComponent {
   }
 
   // CRUD - update
-  public refreshPodcast(inputId: number) {
+  public refreshPodcastConfirm(inputId: number) {
+    var dialogConfirmRef: MatDialogRef<ConfirmationDialog> = this.confirmDialog.open(ConfirmationDialog);
+    dialogConfirmRef.componentInstance.confirmMessage = 'Refresh podcast?';
+    dialogConfirmRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.refreshPodcast(inputId);
+      }
+    });
+  }
+
+  private refreshPodcast(inputId: number) {
+    console.log("Refreshing podcast with id " + inputId);
     var index = this.podcasts.findIndex(a => a.id == inputId);
     var url = this.podcasts[index].url;
     url = url.replace("https://", "");
     url = url.replace("http://", "");
+    console.log("Refreshing podcast url: " + url);
 
     const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
     let parser = new RSSParser();
     parser.parseURL(CORS_PROXY + url, (err, feed) => {
-      if (err) throw err;
+      if (err) {
+        console.error("Error refreshing podcast with id " + inputId);
+        throw err;
+      }
       console.log(feed);
 
       this.updatePodcast(inputId, index, feed);
@@ -208,6 +235,10 @@ export class FetchPodcastComponent {
   }
 
   private fetchFavoritesInfo() {
+    if (HomeComponent.GetLoggedInUser() == null) {
+      return;
+    }
+
     let email = HomeComponent.GetLoggedInUser().emailAddress;
     this.httpContext.get<Favorites[]>(this.baseUrl + 'api/favorites/' + email).subscribe(
       result => {

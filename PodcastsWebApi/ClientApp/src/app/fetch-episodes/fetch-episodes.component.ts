@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Podcast } from '../fetch-podcasts/fetch-podcast.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmationDialog } from '../confirm-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-fetch-episodes',
@@ -21,7 +23,8 @@ export class FetchEpisodesComponent {
     http: HttpClient,
     route: ActivatedRoute,
     @Inject('BASE_URL') baseUrl: string,
-    router: Router) {
+    router: Router,
+    public confirmDialog: MatDialog) {
 
     if (HomeComponent.GetLoggedInUser() == null) {
       router.navigate(['/']);
@@ -79,7 +82,17 @@ export class FetchEpisodesComponent {
   }
 
   // CRUD - delete
-  removeEpisode(inputId: number) {
+  public removeEpisodeConfirm(inputId: number) {
+    var dialogConfirmRef: MatDialogRef<ConfirmationDialog> = this.confirmDialog.open(ConfirmationDialog);
+    dialogConfirmRef.componentInstance.confirmMessage = 'Remove episode?';
+    dialogConfirmRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.removeEpisode(inputId);
+      }
+    });
+  }
+
+  private removeEpisode(inputId: number) {
     this.httpContext
       .delete<number>(this.baseUrl + 'api/episodes/' + inputId)
       .subscribe(
@@ -213,7 +226,6 @@ export class FetchEpisodesComponent {
                 console.error(error);
               });
         }
-
       },
       error => {
         console.error(error);

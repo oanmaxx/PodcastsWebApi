@@ -41,10 +41,10 @@
       <td>{{ podcast.numberOfEpisodes }}</td>
       <td><img class="podcast-picture" src="{{ podcast.picture }}" alt="No Image"/></td>
       <td>
-        <button class="btn btn-primary" (click)="removePodcast(podcast.id)">Remove</button>
+        <button class="btn btn-primary" (click)="removePodcastConfirm(podcast.id)">Remove</button>
       </td>
       <td>
-        <button class="btn btn-primary" (click)="refreshPodcast(podcast.id)">Refresh</button>
+        <button class="btn btn-primary" (click)="refreshPodcastConfirm(podcast.id)">Refresh</button>
       </td>
     </tr>
   </tbody>

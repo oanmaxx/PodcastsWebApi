@@ -14,6 +14,7 @@ import { FetchEpisodesComponent } from './fetch-episodes/fetch-episodes.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputDialogComponent } from './text-input-dialog/text-input-dialog.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { ConfirmationDialog } from './confirm-dialog/confirmation-dialog';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, M
     FetchDataComponent,
     FetchPodcastComponent,
     FetchEpisodesComponent,
-    TextInputDialogComponent
+    TextInputDialogComponent,
+    ConfirmationDialog
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +48,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, M
     MatCheckboxModule
   ],
   entryComponents: [
-    TextInputDialogComponent
+    TextInputDialogComponent,
+    ConfirmationDialog
   ],
   providers: [],
   bootstrap: [AppComponent]
