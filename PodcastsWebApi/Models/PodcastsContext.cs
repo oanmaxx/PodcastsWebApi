@@ -12,5 +12,7 @@ namespace PodcastsWebApi.Models
         public DbSet<Podcast> Podcasts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Episodes> Episodes { get; set; }
+
+        public DbSet<Favorites> Favorites { get; set; }
     }
 }

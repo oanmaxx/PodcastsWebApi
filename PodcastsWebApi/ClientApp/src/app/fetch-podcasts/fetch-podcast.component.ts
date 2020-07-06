@@ -88,18 +88,13 @@ export class FetchPodcastComponent {
     dialogRef.componentInstance.title = 'Custom Podcast URL';
     dialogRef.componentInstance.message = 'eg: https://www.reddit.com/.rss';
     dialogRef.componentInstance.onOk.subscribe(result => {
-      console.log(result);
-      var url = result.replace("https://", "");
-      url = url.replace("http://", "");
-
-      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-      let parser = new RSSParser();
-      parser.parseURL(CORS_PROXY + url, (err, feed) => {
-        if (err) throw err;
-        console.log(feed);
-
-        this.createPodcast(feed);
-      });
+      console.log("Creating podcast with url: " + result);
+      this.getPodcastContentThroughCORSProxy(
+        result,
+        feed => {
+          this.createPodcast(feed);
+        }
+      )
     });
   }
 
@@ -151,22 +146,14 @@ export class FetchPodcastComponent {
   private refreshPodcast(inputId: number) {
     console.log("Refreshing podcast with id " + inputId);
     var index = this.podcasts.findIndex(a => a.id == inputId);
-    var url = this.podcasts[index].url;
-    url = url.replace("https://", "");
-    url = url.replace("http://", "");
-    console.log("Refreshing podcast url: " + url);
 
-    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-    let parser = new RSSParser();
-    parser.parseURL(CORS_PROXY + url, (err, feed) => {
-      if (err) {
-        console.error("Error refreshing podcast with id " + inputId);
-        throw err;
+    console.log("Refreshing podcast with url: " + this.podcasts[index].url);
+    this.getPodcastContentThroughCORSProxy(
+      this.podcasts[index].url,
+      feed => {
+        this.updatePodcast(inputId, index, feed);
       }
-      console.log(feed);
-
-      this.updatePodcast(inputId, index, feed);
-    });
+    )
   }
 
   private updatePodcast(inputId: number, index: number, feed) {
@@ -265,6 +252,37 @@ export class FetchPodcastComponent {
     this.showFavoritesOnly = checked;
     this.readPodcasts()
   }
+
+  // CORS podcast access
+  private getPodcastContentThroughCORSProxy(podcastUrl: string, callback: CallableFunction) {
+    var url = podcastUrl.replace("https://", "").replace("http://", "")    
+
+    //const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+    const CORS_PROXY = "https://api.allorigins.win/get?charset=ISO-8859-1&url=";
+
+    this.httpContext.get(CORS_PROXY + url).subscribe(
+      result => {
+        var content = result;
+        if (result['contents'] !== undefined) {
+          content = result['contents'];
+        }
+        let parser = new RSSParser();
+        parser.parseString(content, (err, feedData) => {
+          if (err) {
+            console.error("Error retrieving podcast with URL: " + podcastUrl);
+            throw err;
+          }
+
+          console.log(feedData);
+          callback(feedData);
+        });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
 }
 
 export interface Podcast {
