@@ -19,6 +19,8 @@ namespace PodcastsWebApi.Models
 
         public string Link { get; set; }
 
+        public string Picture { get; set; }
+
         public Podcast Podcast { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿https://www.reddit.com/.rss
+﻿https://itunes.apple.com/lookup?id=1448196964&entity=podcast
+
+https://dasuniversum.podigee.io/feed/mp3
 https://rss.acast.com/nature
-https://www.youredm.com/feed/
-http://songexploder.net/feed
+https://thrivepodcastforflorists.libsyn.com/rss
+https://anchor.fm/s/2154cbb4/podcast/rss
+https://podcast.posttv.com/itunes/moonrise.xml
